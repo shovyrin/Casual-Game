@@ -41,5 +41,7 @@
 -(void)changePicture:(EnemyClass *) activeObject;
 //
 -(void)setDefaultPicture:(EnemyClass *) activeObject;
+//Рисуем очки
+-(void)addScores:(int) tagIndex andCount:(int)Count;
 
 @end

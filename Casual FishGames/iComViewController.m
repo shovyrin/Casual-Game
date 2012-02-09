@@ -121,13 +121,6 @@
     
     [self imageAnimation:btn];
     
-    
-    //----зачем выделять память, которая не используется???
-    //EnemyClass *enemy = [[EnemyClass alloc]init];//---старая версия
-    //----объявление перенес внутрь цикла. Т.к. enemy используется только внутри цикла
-    
-    //---если мы используем тег у кнопки, то искать кнопку можно по этому тегу(или вообще, по указателю), 
-    //---главное, чтобы теги не повторялись
     for (int i = 0; i < [enemyArray count]; i++) 
     {
         EnemyClass *enemy; 
@@ -138,22 +131,25 @@
             {
                 activeOne = enemy;
                 
+                /*
                 //Работа с статусной строкой
                 int index = [enemyArray indexOfObject:enemy];
                 
                 StatusLabel.text = [[NSString alloc] initWithFormat:@"IndexOne: %d - ",index];
+                 */
                 
             }
             else
             {
                 activeTwo = enemy;
-                
+                /*
                 //Работа с статусной строкой
                 int index = [enemyArray indexOfObject:enemy];
                 
                 NSString *str = [StatusLabel.text stringByAppendingFormat:@"IndexTwo: %d", index];
                 
                 StatusLabel.text = str;
+                 */
             }
         }
     }
@@ -568,6 +564,7 @@
     
 }
 
+
 -(void) deleteStringRow:(NSMutableArray *)mass{
     
     //Найдем похожие индексы элементов
@@ -583,14 +580,14 @@
         
     }
     
-    NSString * str = @"Del. index: ";
+    //NSString * str = @"Del. index: ";
     
     for (int i = 0; i < [mass count]; i++) {
         int index = [[mass objectAtIndex:i] intValue];
         
         EnemyClass *element = [enemyArray objectAtIndex:index];
         
-        str = [str stringByAppendingFormat:@" %d", index];
+        //str = [str stringByAppendingFormat:@" %d", index];
         
         element.gameObject.alpha = 0;
         
@@ -613,7 +610,15 @@
         
     }
     
-    StatusLabel.text = str;
+    int minIndex = [[mass objectAtIndex:0] intValue];
+    
+    EnemyClass *scoreElem = [enemyArray objectAtIndex:minIndex];
+    
+    [self addScores:scoreElem.gameObject.tag andCount:[mass count]];
+    
+    scoreElem = nil;
+    
+    //StatusLabel.text = str;
     
     //NSLog(@"Array count: %d", [enemyArray count]);
     
@@ -625,6 +630,8 @@
     //Найдем похожие индексы элементов
     
     //проверка не вся ли линия выделена
+    
+    
     if( [mass count] != 7 ){
         
         [mass sortUsingSelector:@selector(compare:)];
@@ -654,6 +661,12 @@
         }
         
         int minIndex = [[mass objectAtIndex:0] intValue];
+        
+        EnemyClass *scoreElem = [enemyArray objectAtIndex:minIndex];
+        
+        [self addScores:scoreElem.gameObject.tag andCount:[mass count]];
+        
+        scoreElem = nil;
         
         while ( minIndex > 4){
             
@@ -1011,103 +1024,46 @@
     
 }
 
-//Old Code
-/*
- -(void) verifyThreeInLine{
- 
- int enemyCountInRow = 0;
- // int num = 0;
- 
- NSMutableArray *rowObjects = [[NSMutableArray alloc] init];
- 
- 
- //проверка по оси Х
- //пробежим по массиву
- for (int i = 0; i < [enemyArray count]; i++) {
- EnemyClass *eneminArray = [enemyArray objectAtIndex:i];
- 
- 
- [rowObjects addObject:eneminArray];
- 
- if (((i + 1 )% 5) == 0) {
- //  num++;
- //  NSLog(@"Index: %d -|- Row: %d", i, num);
- 
- // NSLog(@"Index: %d -|- ", i);
- 
- enemyCountInRow = 0;
- 
- for (int j = 0; j < [rowObjects count] - 1; j++) {
- 
- EnemyClass *enemyOne = [rowObjects objectAtIndex:j];
- int titleIndex1 = [enemyOne.gameObject.titleLabel.text intValue];
- 
- EnemyClass *enemyTwo = [rowObjects objectAtIndex:j + 1];
- int titleIndex2 = [enemyTwo.gameObject.titleLabel.text intValue];
- 
- if (titleIndex1 == titleIndex2) {
- 
- enemyCountInRow ++;
- 
- }
- }
- 
- [rowObjects removeAllObjects];
- 
- if (enemyCountInRow >= 2) {
- 
- NSLog(@"We have take 3 in row");
- 
- }
- }
- }
- 
- //проверка по оси Y
- //пробежим по массиву
- 
- for (int x = 0; x < 5; x++) {
- 
- enemyCountInRow = 0;
- 
- for (int y = 0; y < 7; y++) {
- 
- int index = x + 5 * y;
- 
- EnemyClass *eneminArray = [enemyArray objectAtIndex:index];
- 
- [rowObjects addObject:eneminArray];
- }
- 
- for (int i = 0; i < [rowObjects count] - 1; i++) {
- 
- EnemyClass *enemyOne = [rowObjects objectAtIndex:i];
- int titleIndex1 = [enemyOne.gameObject.titleLabel.text intValue];
- 
- EnemyClass *enemyTwo = [rowObjects objectAtIndex:i + 1];
- int titleIndex2 = [enemyTwo.gameObject.titleLabel.text intValue];
- 
- if (titleIndex1 == titleIndex2) {
- 
- enemyCountInRow ++;
- 
- }
- 
- }
- 
- [rowObjects removeAllObjects];
- 
- if (enemyCountInRow >= 2) {
- 
- NSLog(@"We have take 3 in column");
- 
- }
- 
- }
- 
- /////////////////
- 
- }
- */
+
+-(void)addScores:(int)tagIndex andCount:(int)Count{
+    
+    int score;
+    
+    switch (tagIndex) {
+        case 0:
+            //TODO:
+            score = 5;
+            break;
+        case 1:
+            //TODO:
+            score = 7;
+            break;
+        case 2:
+            //TODO:
+            score = 8;
+            break;
+        case 3:
+            //TODO:
+            score = 10;
+            break;
+        case 4:
+            //TODO:
+            score = 12;
+            break;
+            
+        default:
+            break;
+    }
+    
+    score *= Count;
+    
+    int parseScore = [StatusLabel.text intValue];
+    
+    score += parseScore;
+    
+    StatusLabel.text = [[NSString alloc] initWithFormat:@"%d", score];
+    
+}
 
 - (void)viewDidUnload
 {
