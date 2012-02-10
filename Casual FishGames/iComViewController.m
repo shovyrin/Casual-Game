@@ -13,7 +13,7 @@
 @implementation iComViewController
 @synthesize StatusLabel;
 
-@synthesize enemyArray, activeOne, activeTwo;
+@synthesize enemyArray, activeOne, activeTwo, Scores;
 
 - (void)didReceiveMemoryWarning
 {
@@ -789,7 +789,7 @@
             for (int i = 0; i < [mass count] - 1; i++) {
                 int indexOne = [[mass objectAtIndex:i] intValue];
                 int indexTwo = [[mass objectAtIndex:i + 1] intValue];
-                //[mass exchangeObjectAtIndex:i withObjectAtIndex:i + 1];
+                //[mass exchangeObjectAtIn;ex:i withObjectAtIndex:i + 1];
                 [enemyArray exchangeObjectAtIndex:indexOne withObjectAtIndex:indexTwo];
             }
             
@@ -927,7 +927,7 @@
         }
     }
     
-}
+;}
 
 -(void) elementDownLoop:(int)index{
     
@@ -1111,8 +1111,19 @@
     
     score += parseScore;
     
-    StatusLabel.text = [[NSString alloc] initWithFormat:@"%d", score];
+    Scores = score;
+
+    [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(animateScore)  userInfo:nil repeats:YES];
+}
+
+-(void) animateScore{
     
+    int parseScore = [StatusLabel.text intValue];
+    if (parseScore < Scores) {
+        parseScore ++;
+        
+        StatusLabel.text = [NSString stringWithFormat:@"%d", parseScore];
+    }
 }
 
 - (void)viewDidUnload

@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-#define animateDuration 0.6
-#define animateDelay 1.0
-#define animateDelayIn 1.5
+#define animateDuration 0.3
+#define animateDelay 0.3
+#define animateDelayIn 0.5
 
 @class EnemyClass;
 
@@ -19,6 +19,7 @@
 @property (nonatomic, retain) NSMutableArray *enemyArray;
 @property (nonatomic, strong) EnemyClass *activeOne;
 @property (nonatomic, strong) EnemyClass *activeTwo;
+@property (nonatomic) NSInteger Scores;
 
 @property (strong, nonatomic) IBOutlet UILabel *StatusLabel;
 //Создание объектов
@@ -47,6 +48,7 @@
 -(void)setDefaultPicture:(EnemyClass *) activeObject;
 //Рисуем очки
 -(void)addScores:(int) tagIndex andCount:(int)Count;
+-(void) animateScore;
 //Добавление взрыва
 -(void)addBoomEffect:(NSMutableArray *) mass;
 
