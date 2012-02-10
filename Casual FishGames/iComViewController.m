@@ -658,6 +658,18 @@
             
             //  NSLog(@"Del_index: %d", index);
             
+            //Кидаем взрыв
+           /* [self addBoomEffect:element];
+            [UIView animateWithDuration:0.3
+                                  delay:0.6
+                                options:UIViewAnimationTransitionNone
+                             animations:^{
+                                 
+                                 element.gameObject.alpha = 0;
+                             }
+                             completion:^(BOOL finished){
+                             }];
+            */
         }
         
         int minIndex = [[mass objectAtIndex:0] intValue];
@@ -672,8 +684,8 @@
             
             minIndex -= 5;
             
-            [UIView animateWithDuration:0.8
-                                  delay:0.8
+            [UIView animateWithDuration:animateDuration
+                                  delay:animateDelay
                                 options:UIViewAnimationTransitionNone
                              animations:^{
                                  EnemyClass *element = [enemyArray objectAtIndex:minIndex];
@@ -702,8 +714,8 @@
                 
                 EnemyClass *element = [enemyArray objectAtIndex:index];
                 
-                [UIView animateWithDuration:0.4
-                                      delay:1.0
+                [UIView animateWithDuration:animateDuration
+                                      delay:animateDelay
                                     options:UIViewAnimationTransitionNone
                                  animations:^{
                                      
@@ -764,8 +776,8 @@
                 
                 EnemyClass *element = [enemyArray objectAtIndex:index];
                 
-                [UIView animateWithDuration:0.6
-                                      delay:1.0
+                [UIView animateWithDuration:animateDuration
+                                      delay:animateDelay
                                     options:UIViewAnimationTransitionNone
                                  animations:^{
                                      
@@ -816,8 +828,8 @@
                 
                 EnemyClass *element = [enemyArray objectAtIndex:index];
                 
-                [UIView animateWithDuration:0.6
-                                      delay:1.0
+                [UIView animateWithDuration:animateDuration
+                                      delay:animateDelay
                                     options:UIViewAnimationTransitionNone
                                  animations:^{
                                      
@@ -853,8 +865,8 @@
                 
                 EnemyClass *element = [enemyArray objectAtIndex:index];
                 
-                [UIView animateWithDuration:0.6
-                                      delay:1.0
+                [UIView animateWithDuration:animateDuration
+                                      delay:animateDelay
                                     options:UIViewAnimationTransitionNone
                                  animations:^{
                                      
@@ -886,8 +898,8 @@
                 
                 EnemyClass *element = [enemyArray objectAtIndex:minIndex + 5 * [mass count]];
                 
-                [UIView animateWithDuration:0.6
-                                      delay:1.0
+                [UIView animateWithDuration:animateDuration
+                                      delay:animateDelay
                                     options:UIViewAnimationTransitionNone
                                  animations:^{
                                      
@@ -936,8 +948,8 @@
             index -= 5;
             EnemyClass *enemyOne = [enemyArray objectAtIndex:index];
             
-            [UIView animateWithDuration:0.6
-                                  delay:0.8
+            [UIView animateWithDuration:animateDuration
+                                  delay:animateDelay
                                 options:UIViewAnimationTransitionNone
                              animations:^{
                                  float tempPosX = enemyOne.gameObject.center.x;
@@ -981,8 +993,8 @@
     
     [self changePicture:enemyTwo];
     
-    [UIView animateWithDuration:0.6
-                          delay:1.2
+    [UIView animateWithDuration:animateDuration
+                          delay:animateDelayIn
                         options:UIViewAnimationTransitionNone
                      animations:^{
                          enemyTwo.gameObject.alpha = 1;
@@ -1024,6 +1036,19 @@
     
 }
 
+-(void) addBoomEffect:(EnemyClass *)activeObject{
+    
+    activeObject.gameObject.imageView.animationImages = [NSArray arrayWithObjects:
+                                                         [UIImage imageNamed:@"pop_1.png"],
+                                                         [UIImage imageNamed:@"pop_2.png"],
+                                                         [UIImage imageNamed:@"pop_3.png"],
+                                                         [UIImage imageNamed:@"pop_4.png"],
+                                                         nil];
+    activeObject.gameObject.imageView.animationDuration = .3;
+    activeObject.gameObject.imageView.animationRepeatCount = 1;
+    [activeObject.gameObject.imageView startAnimating];
+    
+}
 
 -(void)addScores:(int)tagIndex andCount:(int)Count{
     

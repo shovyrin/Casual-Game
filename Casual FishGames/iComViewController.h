@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+#define animateDuration 0.8
+#define animateDelay 1.0
+#define animateDelayIn 1.3
+
 @class EnemyClass;
 
 @interface iComViewController : UIViewController
@@ -39,9 +43,11 @@
 -(void) elementGoUP:(int) index;
 //меняем картинку и элемент
 -(void)changePicture:(EnemyClass *) activeObject;
-//
+//установка картинки
 -(void)setDefaultPicture:(EnemyClass *) activeObject;
 //Рисуем очки
 -(void)addScores:(int) tagIndex andCount:(int)Count;
+//Добавление взрыва
+-(void)addBoomEffect:(EnemyClass *) activeObject;
 
 @end
