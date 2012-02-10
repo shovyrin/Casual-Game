@@ -1045,7 +1045,7 @@
         
         _button.alpha = 1;
         
-        [_button setImage:[UIImage imageNamed:@"pop_1.png"] forState:UIControlStateNormal];
+        [_button setImage:[UIImage imageNamed:@"bomb_burst_1.png"] forState:UIControlStateNormal];
         
         newObject.gameObject = _button;
         
