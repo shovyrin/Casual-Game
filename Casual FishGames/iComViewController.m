@@ -1,9 +1,9 @@
 //
-//  iComViewController.m
-//  Casual FishGames
+// iComViewController.m
+// Casual FishGames
 //
-//  Created by Apple Air on 25.01.12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+// Created by Apple Air on 25.01.12.
+// Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
 #import "iComViewController.h"
@@ -62,11 +62,11 @@
     //---установка тэга
     [_button setTag:rNumber];
     
-    //  NSString *tempText = [[NSString alloc] initWithFormat:@"%d",rNumber];
+    // NSString *tempText = [[NSString alloc] initWithFormat:@"%d",rNumber];
     //[_button setTitle:tempText forState:UIControlStateNormal];
     
     
-    //добавляем кнопке обработчик  (оригинал)
+    //добавляем кнопке обработчик (оригинал)
     
     [_button addTarget:self action:@selector(tap1:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -98,10 +98,10 @@
     int posY = 80;
     
     enemyArray = [[NSMutableArray alloc]init];
-    for (int j = 0; j < 7; j++) 
+    for (int j = 0; j < 7; j++)
     {
         
-        for(int i = 0; i < 5; i++) 
+        for(int i = 0; i < 5; i++)
         {
             
             [self createElement:posX andY:posY];
@@ -121,21 +121,20 @@
     
     [self imageAnimation:btn];
     
-    for (int i = 0; i < [enemyArray count]; i++) 
+    for (int i = 0; i < [enemyArray count]; i++)
     {
-        EnemyClass *enemy; 
+        EnemyClass *enemy;
         enemy = [enemyArray objectAtIndex:i];
-        if (btn == enemy.gameObject) 
+        if (btn == enemy.gameObject)
         {
             if (activeOne == nil)
             {
                 activeOne = enemy;
                 
                 /*
-                //Работа с статусной строкой
-                int index = [enemyArray indexOfObject:enemy];
-                
-                StatusLabel.text = [[NSString alloc] initWithFormat:@"IndexOne: %d - ",index];
+                 //Работа с статусной строкой
+                 int index = [enemyArray indexOfObject:enemy];
+                 StatusLabel.text = [[NSString alloc] initWithFormat:@"IndexOne: %d - ",index];
                  */
                 
             }
@@ -143,31 +142,29 @@
             {
                 activeTwo = enemy;
                 /*
-                //Работа с статусной строкой
-                int index = [enemyArray indexOfObject:enemy];
-                
-                NSString *str = [StatusLabel.text stringByAppendingFormat:@"IndexTwo: %d", index];
-                
-                StatusLabel.text = str;
+                 //Работа с статусной строкой
+                 int index = [enemyArray indexOfObject:enemy];
+                 NSString *str = [StatusLabel.text stringByAppendingFormat:@"IndexTwo: %d", index];
+                 StatusLabel.text = str;
                  */
             }
         }
     }
     
     
-    /* 
+    /*
      NSLog(@"Enemy Pressed coord: %g : %g", x, y);
-     NSLog(@"ELements ONE Pressed coord: %g : %g", activeOne.gameObject.center.x, 
+     NSLog(@"ELements ONE Pressed coord: %g : %g", activeOne.gameObject.center.x,
      activeOne.gameObject.center.y);
      NSLog(@"ELements TWO Pressed coord: %g : %g", activeTwo.gameObject.center.x,
      activeTwo.gameObject.center.y);
      */
-    if ([self isTwoSelected ] == YES) 
+    if ([self isTwoSelected ] == YES)
     {
         //TODO:
         NSLog(@"Two Selected");
         
-        if ([self isNeborgElements] == YES) 
+        if ([self isNeborgElements] == YES)
         {
             //TODO:
             NSLog(@"Two Neighbor elements");
@@ -176,7 +173,7 @@
             [self changeActiveElements];
             
         }
-        else 
+        else
         {
             
             [self setDefaultPicture: activeOne];
@@ -330,7 +327,7 @@
     //activeOne = [enemyArray objectAtIndex:elemIndexOne];
     //activeTwo = [enemyArray objectAtIndex:elemIndexTwo];
     
-    //---идем  :)))
+    //---идем :)))
     //едем в путь
     [UIView animateWithDuration:0.7
                           delay:0.2
@@ -344,7 +341,7 @@
                          [enemyArray exchangeObjectAtIndex:elemIndexOne withObjectAtIndex:elemIndexTwo];
                          
                          
-                         //NSLog(@"index 1:%d   index 2:%d", elemIndexOne, elemIndexTwo);
+                         //NSLog(@"index 1:%d index 2:%d", elemIndexOne, elemIndexTwo);
                          //-------------------------------------------------
                          
                          
@@ -453,9 +450,9 @@
     
     //Идем влево
     for (int i = indexOfObject; i >= 1; i--) {
-        int indexOne =  [[rowObjects objectAtIndex:i]intValue];
+        int indexOne = [[rowObjects objectAtIndex:i]intValue];
         
-        int indexTwo =  [[rowObjects objectAtIndex:i - 1] intValue];
+        int indexTwo = [[rowObjects objectAtIndex:i - 1] intValue];
         
         EnemyClass *enemyOne = [enemyArray objectAtIndex:indexOne];
         int titleIndex1 = enemyOne.gameObject.tag;
@@ -591,7 +588,7 @@
         
         element.gameObject.alpha = 0;
         
-        //  NSLog(@"Del_index: %d", index);
+        // NSLog(@"Del_index: %d", index);
         
     }
     
@@ -599,10 +596,12 @@
         int index = [[mass objectAtIndex:i] intValue];
         
         [self elementDownLoop:index];
-        
-        
-        
     }
+    
+    
+    //Кидаем взрыв
+    [self addBoomEffect:mass];
+    
     for (int i = 0; i < [mass count]; i++) {
         int index = [[mass objectAtIndex:i] intValue];
         
@@ -656,21 +655,12 @@
             
             element.gameObject.alpha = 0;
             
-            //  NSLog(@"Del_index: %d", index);
-            
-            //Кидаем взрыв
-           /* [self addBoomEffect:element];
-            [UIView animateWithDuration:0.3
-                                  delay:0.6
-                                options:UIViewAnimationTransitionNone
-                             animations:^{
-                                 
-                                 element.gameObject.alpha = 0;
-                             }
-                             completion:^(BOOL finished){
-                             }];
-            */
+            // NSLog(@"Del_index: %d", index);
+                        
         }
+        
+        //Кидаем взрыв
+        [self addBoomEffect:mass];
         
         int minIndex = [[mass objectAtIndex:0] intValue];
         
@@ -932,7 +922,7 @@
             
             element.gameObject.alpha = 0;
             
-            //  NSLog(@"Del_index: %d", index);
+            // NSLog(@"Del_index: %d", index);
             
         }
     }
@@ -974,7 +964,7 @@
         // Получаем верхний элемент по индексу
         //Получим элемент по индексу
         
-        EnemyClass *enemyTwo = [enemyArray objectAtIndex:index];    //20
+        EnemyClass *enemyTwo = [enemyArray objectAtIndex:index]; //20
         
         
         // enemyTwo.gameObject.alpha = 1;
@@ -1015,16 +1005,16 @@
             [activeObject.gameObject setImage:[UIImage imageNamed:@"Flu_Movement_1.png"] forState:UIControlStateNormal];
             break;
         case 1:
-            [activeObject.gameObject  setImage:[UIImage imageNamed:@"cold_movement_1.png"] forState:UIControlStateNormal];
+            [activeObject.gameObject setImage:[UIImage imageNamed:@"cold_movement_1.png"] forState:UIControlStateNormal];
             break;
         case 2:
-            [activeObject.gameObject  setImage:[UIImage imageNamed:@"dustMite_Move_1.png"] forState:UIControlStateNormal];
+            [activeObject.gameObject setImage:[UIImage imageNamed:@"dustMite_Move_1.png"] forState:UIControlStateNormal];
             break;
         case 3:
-            [activeObject.gameObject  setImage:[UIImage imageNamed:@"pollen_movement_1.png"] forState:UIControlStateNormal];
+            [activeObject.gameObject setImage:[UIImage imageNamed:@"pollen_movement_1.png"] forState:UIControlStateNormal];
             break;
         case 4:
-            [activeObject.gameObject  setImage:[UIImage imageNamed:@"sailor_movement_1.png"] forState:UIControlStateNormal];
+            [activeObject.gameObject setImage:[UIImage imageNamed:@"sailor_movement_1.png"] forState:UIControlStateNormal];
             break;
             
         default:
@@ -1036,17 +1026,52 @@
     
 }
 
--(void) addBoomEffect:(EnemyClass *)activeObject{
+-(void) addBoomEffect:(NSMutableArray *) mass{
     
-    activeObject.gameObject.imageView.animationImages = [NSArray arrayWithObjects:
-                                                         [UIImage imageNamed:@"pop_1.png"],
-                                                         [UIImage imageNamed:@"pop_2.png"],
-                                                         [UIImage imageNamed:@"pop_3.png"],
-                                                         [UIImage imageNamed:@"pop_4.png"],
-                                                         nil];
-    activeObject.gameObject.imageView.animationDuration = .3;
-    activeObject.gameObject.imageView.animationRepeatCount = 1;
-    [activeObject.gameObject.imageView startAnimating];
+    for (int i = 0; i < [mass count]; i++) {
+        
+        int index = [[mass objectAtIndex:i] intValue];
+        EnemyClass *tempObject = [enemyArray objectAtIndex:index];
+        int tempX = tempObject.gameObject.frame.origin.x;
+        int tempY = tempObject.gameObject.frame.origin.y;
+        
+        tempObject = nil;
+        
+        EnemyClass *newObject = [[EnemyClass alloc] init];
+        
+        UIButton *_button = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        _button.frame = CGRectMake(tempX, tempY, 53, 53);
+        
+        _button.alpha = 1;
+        
+        [_button setImage:[UIImage imageNamed:@"pop_1.png"] forState:UIControlStateNormal];
+        
+        newObject.gameObject = _button;
+        
+        [self.view addSubview:newObject.gameObject];
+        
+        
+        newObject.gameObject.imageView.animationImages = [NSArray arrayWithObjects:
+                                                          [UIImage imageNamed:@"bomb_burst_1.png"],
+                                                          [UIImage imageNamed:@"bomb_burst_2.png"],
+                                                          [UIImage imageNamed:@"bomb_burst_3.png"],
+                                                          [UIImage imageNamed:@"bomb_burst_4.png"],
+                                                          nil];
+        newObject.gameObject.imageView.animationDuration = .3;
+        newObject.gameObject.imageView.animationRepeatCount = 1;
+        [newObject.gameObject.imageView startAnimating];
+        
+        [UIView animateWithDuration:0.1
+                              delay:0.2
+                            options:UIViewAnimationTransitionNone
+                         animations:^{
+                              newObject.gameObject.alpha = 0;
+                         }
+                         completion:^(BOOL finished){
+                             [newObject.gameObject removeFromSuperview];
+                         }];        
+    }
     
 }
 

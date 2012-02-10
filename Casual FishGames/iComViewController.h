@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-#define animateDuration 0.8
+#define animateDuration 0.6
 #define animateDelay 1.0
-#define animateDelayIn 1.3
+#define animateDelayIn 1.5
 
 @class EnemyClass;
 
@@ -48,6 +48,6 @@
 //Рисуем очки
 -(void)addScores:(int) tagIndex andCount:(int)Count;
 //Добавление взрыва
--(void)addBoomEffect:(EnemyClass *) activeObject;
+-(void)addBoomEffect:(NSMutableArray *) mass;
 
 @end
