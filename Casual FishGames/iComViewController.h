@@ -11,6 +11,7 @@
 #define animateDuration 0.3
 #define animateDelay 0.3
 #define animateDelayIn 0.5
+#define animateSecondVerify 1.3
 
 @class EnemyClass;
 
@@ -20,6 +21,9 @@
 @property (nonatomic, strong) EnemyClass *activeOne;
 @property (nonatomic, strong) EnemyClass *activeTwo;
 @property (nonatomic) NSInteger Scores;
+@property (nonatomic, retain) NSMutableArray *indexMass;
+
+- (IBAction)resetButton:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UILabel *StatusLabel;
 //Создание объектов
@@ -48,8 +52,11 @@
 -(void)setDefaultPicture:(EnemyClass *) activeObject;
 //Рисуем очки
 -(void)addScores:(int) tagIndex andCount:(int)Count;
+//Анимационное добавление очков
 -(void) animateScore;
 //Добавление взрыва
 -(void)addBoomEffect:(NSMutableArray *) mass;
+//Повторный пробег по строкам
+-(void)secondVerifyLine;
 
 @end

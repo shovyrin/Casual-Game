@@ -13,7 +13,7 @@
 @implementation iComViewController
 @synthesize StatusLabel;
 
-@synthesize enemyArray, activeOne, activeTwo, Scores;
+@synthesize enemyArray, activeOne, activeTwo, Scores, indexMass;
 
 - (void)didReceiveMemoryWarning
 {
@@ -62,23 +62,12 @@
     //---установка тэга
     [_button setTag:rNumber];
     
-    // NSString *tempText = [[NSString alloc] initWithFormat:@"%d",rNumber];
-    //[_button setTitle:tempText forState:UIControlStateNormal];
-    
     
     //добавляем кнопке обработчик (оригинал)
     
     [_button addTarget:self action:@selector(tap1:) forControlEvents:UIControlEventTouchUpInside];
     
-    //add the button to the view
-    //записываем ссылку на кнопку в игровой объект
-    //---TODO переименовать gameObject в button. Путает.
-    //---Т.к. enemy - это игровой объект, а gameObject - ссылка на кнопку
     enemy.gameObject = _button;
-    /*
-     enemy.objectX = _button.center.x;
-     enemy.objectY = _button.center.y;
-     */
     
     [self.view addSubview:enemy.gameObject];
     
@@ -645,6 +634,11 @@
     
     //NSLog(@"Array count: %d", [enemyArray count]);
     
+    [indexMass removeAllObjects];
+    
+    indexMass = [[NSMutableArray alloc]initWithArray:mass];
+    
+    [NSTimer scheduledTimerWithTimeInterval:animateSecondVerify target:self selector:@selector(secondVerifyLine)  userInfo:nil repeats:NO];
 }
 
 
@@ -951,7 +945,27 @@
         }
     }
     
-;}
+    
+    [indexMass removeAllObjects];
+    
+    indexMass = [[NSMutableArray alloc]initWithArray:mass];
+    
+    [NSTimer scheduledTimerWithTimeInterval:animateSecondVerify target:self selector:@selector(secondVerifyLine)  userInfo:nil repeats:NO];
+    
+}
+
+-(void)secondVerifyLine{
+    
+    //Проверка случайных совпадений
+    for (int i = 0; i < [indexMass count]; i++) {
+        //
+        int index = [[indexMass objectAtIndex:i] intValue];
+        
+        [self verifyThreeInLine:index];
+        
+    }
+    
+}
 
 -(void) elementDownLoop:(int)index{
     
@@ -1139,6 +1153,7 @@
 
     [NSTimer scheduledTimerWithTimeInterval:0.06 target:self selector:@selector(animateScore)  userInfo:nil repeats:YES];
 }
+
 -(void) animateScore{
     
     int parseScore = [StatusLabel.text intValue];
@@ -1164,4 +1179,15 @@
     return NO;//(interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
+- (IBAction)resetButton:(id)sender {
+    
+    for (int i = 0; i < [enemyArray count]; i++) {
+        EnemyClass *tempEnemy = [enemyArray objectAtIndex:i];
+        
+        [self changePicture:tempEnemy];
+        
+        tempEnemy = nil;
+    }
+    
+}
 @end
