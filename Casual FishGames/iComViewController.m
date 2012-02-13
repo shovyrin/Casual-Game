@@ -577,6 +577,8 @@
 
 -(void) deleteStringRow:(NSMutableArray *)mass{
     
+    [indexMass removeAllObjects];
+    
     //Найдем похожие индексы элементов
     
     [mass sortUsingSelector:@selector(compare:)];
@@ -634,7 +636,6 @@
     
     //NSLog(@"Array count: %d", [enemyArray count]);
     
-    [indexMass removeAllObjects];
     
     indexMass = [[NSMutableArray alloc]initWithArray:mass];
     
@@ -647,6 +648,8 @@
     //Найдем похожие индексы элементов
     
     //проверка не вся ли линия выделена
+    
+    [indexMass removeAllObjects];
     
     
     if( [mass count] != 7 ){
@@ -946,8 +949,6 @@
     }
     
     
-    [indexMass removeAllObjects];
-    
     indexMass = [[NSMutableArray alloc]initWithArray:mass];
     
     [NSTimer scheduledTimerWithTimeInterval:animateSecondVerify target:self selector:@selector(secondVerifyLine)  userInfo:nil repeats:NO];
@@ -974,6 +975,9 @@
         while (index > 4){
             // Получаем верхний элемент по индексу
             index -= 5;
+            
+            //[indexMass addObject:[NSNumber numberWithInt:index]];
+            
             EnemyClass *enemyOne = [enemyArray objectAtIndex:index];
             
             [UIView animateWithDuration:animateDuration
