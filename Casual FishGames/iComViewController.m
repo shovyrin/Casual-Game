@@ -1115,7 +1115,7 @@
 
     [NSTimer scheduledTimerWithTimeInterval:0.06 target:self selector:@selector(animateScore)  userInfo:nil repeats:YES];
 }
-
+//add comment
 -(void) animateScore{
     
     int parseScore = [StatusLabel.text intValue];
