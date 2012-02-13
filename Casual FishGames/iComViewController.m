@@ -1113,7 +1113,7 @@
     
     Scores = score;
 
-    [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(animateScore)  userInfo:nil repeats:YES];
+    [NSTimer scheduledTimerWithTimeInterval:0.06 target:self selector:@selector(animateScore)  userInfo:nil repeats:YES];
 }
 
 -(void) animateScore{
