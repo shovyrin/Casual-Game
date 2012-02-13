@@ -322,11 +322,6 @@
     NSUInteger elemIndexOne = [enemyArray indexOfObject:activeOne];
     NSUInteger elemIndexTwo = [enemyArray indexOfObject:activeTwo];
     
-    //---не нужно выделять память, которая не будет использована
-    //---она выделяется тут: one = (EnemyClass *)[enemyArray objectAtIndex:elemIndexOne];
-    //activeOne = [enemyArray objectAtIndex:elemIndexOne];
-    //activeTwo = [enemyArray objectAtIndex:elemIndexTwo];
-    
     //---идем :)))
     //едем в путь
     [UIView animateWithDuration:0.7
@@ -344,11 +339,32 @@
                          //NSLog(@"index 1:%d index 2:%d", elemIndexOne, elemIndexTwo);
                          //-------------------------------------------------
                          
+                         NSInteger deleteHelper = 0;
                          
                          //проверим линии
-                         [self verifyThreeInLine: elemIndexOne];
-                         [self verifyThreeInLine: elemIndexTwo];
+                         if([self verifyThreeInLine: elemIndexOne] == YES) deleteHelper++;
+                         if([self verifyThreeInLine: elemIndexTwo] == YES) deleteHelper++;
                          
+                         ////////////////////////
+                         //ПРОВЕРКА НА СОВПАДЕНИЕ 3 В РЯД
+                         if (deleteHelper == 0){
+                            
+                             [UIView animateWithDuration:0.4
+                                                   delay:0.2
+                                                 options:UIViewAnimationTransitionNone
+                                              animations:^{
+                                                  activeTwo.gameObject.center = CGPointMake(tempTwoX, tempTwoY);
+                                                  activeOne.gameObject.center = CGPointMake(tempOneX, tempOneY);
+                                              }
+                                              completion:^(BOOL finished){
+                                                  
+                                                  [enemyArray exchangeObjectAtIndex:elemIndexOne withObjectAtIndex:elemIndexTwo];
+                                                  
+                                        }];
+                        /////////////////////////
+                        //---------------------
+                             
+                         }
                          
                          activeOne = nil;
                          activeTwo = nil;
@@ -390,13 +406,15 @@
 }
 
 
--(void) verifyThreeInLine:(int) sender{
+-(BOOL) verifyThreeInLine:(int) sender{
     
     int index = sender;
     
     int objectOneY = index / 5;
     
     int enemyCountInRow = 0;
+    
+    BOOL isLine = NO;
     
     //Поиск по оси Х
     //Соберем строку в массиве
@@ -482,6 +500,8 @@
         
         [self deleteStringRow:indexArray];
         
+        isLine = YES;
+        
     }
     
     [indexArray removeAllObjects];
@@ -551,6 +571,8 @@
             
             [self deleteStringColumn:indexArray];
             
+            isLine = YES;
+            
         }
         
         [indexArray removeAllObjects];
@@ -558,6 +580,8 @@
         //END Поиск по оси Y
         
     }
+    
+    return isLine;
     
 }
 
@@ -1115,7 +1139,6 @@
 
     [NSTimer scheduledTimerWithTimeInterval:0.06 target:self selector:@selector(animateScore)  userInfo:nil repeats:YES];
 }
-//add comment
 -(void) animateScore{
     
     int parseScore = [StatusLabel.text intValue];

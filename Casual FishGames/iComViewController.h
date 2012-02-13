@@ -31,7 +31,7 @@
 //Animation
 -(void) changeActiveElements;
 //проверка на линии в ряд
--(void) verifyThreeInLine:(int) sender;
+-(BOOL) verifyThreeInLine:(int) sender;
 //Animate Images
 -(void) imageAnimation:(UIButton *) btn;
 //Удаляем строку X
