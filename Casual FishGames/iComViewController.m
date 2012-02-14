@@ -337,7 +337,7 @@
                          ////////////////////////
                          //ПРОВЕРКА НА СОВПАДЕНИЕ 3 В РЯД
                          if (deleteHelper == 0){
-                            
+                             
                              [UIView animateWithDuration:0.4
                                                    delay:0.2
                                                  options:UIViewAnimationTransitionNone
@@ -349,9 +349,9 @@
                                                   
                                                   [enemyArray exchangeObjectAtIndex:elemIndexOne withObjectAtIndex:elemIndexTwo];
                                                   
-                                        }];
-                        /////////////////////////
-                        //---------------------
+                                              }];
+                             /////////////////////////
+                             //---------------------
                              
                          }
                          
@@ -393,7 +393,6 @@
     [index.gameObject setEnabled:YES];
     
 }
-
 
 -(BOOL) verifyThreeInLine:(int) sender{
     
@@ -574,7 +573,6 @@
     
 }
 
-
 -(void) deleteStringRow:(NSMutableArray *)mass{
     
     [indexMass removeAllObjects];
@@ -677,7 +675,7 @@
             element.gameObject.alpha = 0;
             
             // NSLog(@"Del_index: %d", index);
-                        
+            
         }
         
         //Кидаем взрыв
@@ -962,7 +960,15 @@
         //
         int index = [[indexMass objectAtIndex:i] intValue];
         
-        [self verifyThreeInLine:index];
+        while (index > 4){
+            
+            while([self verifyThreeInLine:index] == YES){
+                [NSTimer scheduledTimerWithTimeInterval:animateSecondVerify target:self selector:@selector(secondVerifyLine)  userInfo:nil repeats:NO];
+            }
+            
+            index -= 5;
+            
+        }
         
     }
     
@@ -997,7 +1003,6 @@
     }
     
 }
-
 
 -(void) elementGoUP:(int)index{
     
@@ -1037,7 +1042,7 @@
     
 }
 
--(void)changePicture:(EnemyClass *) activeObject{
+-(void) changePicture:(EnemyClass *) activeObject{
     
     
     int rNumber = rand()%5;
@@ -1073,7 +1078,9 @@
     for (int i = 0; i < [mass count]; i++) {
         
         int index = [[mass objectAtIndex:i] intValue];
+        
         EnemyClass *tempObject = [enemyArray objectAtIndex:index];
+        
         int tempX = tempObject.gameObject.frame.origin.x;
         int tempY = tempObject.gameObject.frame.origin.y;
         
@@ -1104,11 +1111,12 @@
         newObject.gameObject.imageView.animationRepeatCount = 1;
         [newObject.gameObject.imageView startAnimating];
         
+        
         [UIView animateWithDuration:0.1
                               delay:0.2
                             options:UIViewAnimationTransitionNone
                          animations:^{
-                              newObject.gameObject.alpha = 0;
+                             newObject.gameObject.alpha = 0;
                          }
                          completion:^(BOOL finished){
                              [newObject.gameObject removeFromSuperview];
@@ -1117,7 +1125,7 @@
     
 }
 
--(void)addScores:(int)tagIndex andCount:(int)Count{
+-(void) addScores:(int)tagIndex andCount:(int)Count{
     
     int score;
     
@@ -1154,7 +1162,7 @@
     score += parseScore;
     
     Scores = score;
-
+    
     [NSTimer scheduledTimerWithTimeInterval:0.06 target:self selector:@selector(animateScore)  userInfo:nil repeats:YES];
 }
 
@@ -1168,16 +1176,14 @@
     }
 }
 
-- (void)viewDidUnload
-{
+-(void) viewDidUnload{
     [self setStatusLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
 
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+-(BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
     return NO;//(interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
@@ -1194,4 +1200,5 @@
     }
     
 }
+
 @end
