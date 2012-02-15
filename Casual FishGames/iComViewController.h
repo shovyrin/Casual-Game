@@ -11,7 +11,8 @@
 #define animateDuration 0.3
 #define animateDelay 0.3
 #define animateDelayIn 0.5
-#define animateSecondVerify 1.4
+#define animateSecondVerify 1.0
+#define sizeAndStep 53
 
 @class EnemyClass;
 

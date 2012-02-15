@@ -33,7 +33,7 @@
     UIButton *_button = [UIButton buttonWithType:UIButtonTypeCustom];
     
     //set the position of the button
-    _button.frame = CGRectMake(posX, posY, 53, 53);
+    _button.frame = CGRectMake(posX, posY, sizeAndStep, sizeAndStep);
     
     
     int rNumber = rand()%5;
@@ -94,10 +94,10 @@
         {
             
             [self createElement:posX andY:posY];
-            posX +=53;
+            posX +=sizeAndStep;
             
         }
-        posY += 53;
+        posY += sizeAndStep;
         posX = 30;
     }
     
@@ -699,7 +699,7 @@
                              animations:^{
                                  EnemyClass *element = [enemyArray objectAtIndex:minIndex];
                                  
-                                 int stepDown = (53 * [mass count]) + element.gameObject.center.y;
+                                 int stepDown = (sizeAndStep * [mass count]) + element.gameObject.center.y;
                                  int x = element.gameObject.center.x;
                                  element.gameObject.center = CGPointMake(x, stepDown);
                              }
@@ -790,7 +790,7 @@
                                     options:UIViewAnimationTransitionNone
                                  animations:^{
                                      
-                                     int stepDown = element.gameObject.center.y - (53 * mnogitel);
+                                     int stepDown = element.gameObject.center.y - (sizeAndStep * mnogitel);
                                      int x = element.gameObject.center.x;
                                      element.gameObject.center = CGPointMake(x, stepDown);
                                      
@@ -842,7 +842,7 @@
                                     options:UIViewAnimationTransitionNone
                                  animations:^{
                                      
-                                     int stepDown = element.gameObject.center.y - (53 * 3);
+                                     int stepDown = element.gameObject.center.y - (sizeAndStep * 3);
                                      int x = element.gameObject.center.x;
                                      element.gameObject.center = CGPointMake(x, stepDown);
                                      
@@ -879,7 +879,7 @@
                                     options:UIViewAnimationTransitionNone
                                  animations:^{
                                      
-                                     int stepDown = element.gameObject.center.y - (53 * 4);
+                                     int stepDown = element.gameObject.center.y - (sizeAndStep * 4);
                                      int x = element.gameObject.center.x;
                                      element.gameObject.center = CGPointMake(x, stepDown);
                                      
@@ -912,7 +912,7 @@
                                     options:UIViewAnimationTransitionNone
                                  animations:^{
                                      
-                                     int stepDown = element.gameObject.center.y - (53 * [mass count]);
+                                     int stepDown = element.gameObject.center.y - (sizeAndStep * [mass count]);
                                      int x = element.gameObject.center.x;
                                      element.gameObject.center = CGPointMake(x, stepDown);
                                      
@@ -991,7 +991,7 @@
                                 options:UIViewAnimationTransitionNone
                              animations:^{
                                  float tempPosX = enemyOne.gameObject.center.x;
-                                 float tempPosY = enemyOne.gameObject.center.y + 53;
+                                 float tempPosY = enemyOne.gameObject.center.y + sizeAndStep;
                                  
                                  enemyOne.gameObject.center = CGPointMake(tempPosX, tempPosY);
                              }
@@ -1017,7 +1017,7 @@
         // enemyTwo.gameObject.alpha = 1;
         
         float tempPosX = enemyTwo.gameObject.center.x;
-        float tempPosY = enemyTwo.gameObject.center.y - 53;
+        float tempPosY = enemyTwo.gameObject.center.y - sizeAndStep;
         enemyTwo.gameObject.center = CGPointMake(tempPosX, tempPosY);
         
         [enemyArray exchangeObjectAtIndex:index withObjectAtIndex:index-5];
@@ -1090,7 +1090,7 @@
         
         UIButton *_button = [UIButton buttonWithType:UIButtonTypeCustom];
         
-        _button.frame = CGRectMake(tempX, tempY, 53, 53);
+        _button.frame = CGRectMake(tempX, tempY, sizeAndStep, sizeAndStep);
         
         _button.alpha = 1;
         
