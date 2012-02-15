@@ -796,9 +796,8 @@
                                      
                                  }
                                  completion:^(BOOL finished){
-                                     element.gameObject.alpha = 1;
-                                     
                                      [self changePicture:element];
+                                     element.gameObject.alpha = 1;
                                      
                                  }];
                 
@@ -848,10 +847,8 @@
                                      
                                  }
                                  completion:^(BOOL finished){
-                                     element.gameObject.alpha = 1;
-                                     
                                      [self changePicture:element];
-                                     
+                                     element.gameObject.alpha = 1;
                                  }];
                 [enemyArray exchangeObjectAtIndex:index withObjectAtIndex:i * 5 + (index % 5)];
                 
@@ -885,10 +882,8 @@
                                      
                                  }
                                  completion:^(BOOL finished){
-                                     element.gameObject.alpha = 1;
-                                     
                                      [self changePicture:element];
-                                     
+                                     element.gameObject.alpha = 1;
                                  }];
                 [enemyArray exchangeObjectAtIndex:index withObjectAtIndex:i * 5 + (index % 5)];
                 
@@ -918,9 +913,9 @@
                                      
                                  }
                                  completion:^(BOOL finished){
-                                     element.gameObject.alpha = 1;
                                      
                                      [self changePicture:element];
+                                     element.gameObject.alpha = 1;
                                      
                                  }];
                 
@@ -1084,13 +1079,44 @@
         int tempX = tempObject.gameObject.frame.origin.x;
         int tempY = tempObject.gameObject.frame.origin.y;
         
+        
+        //Найдем очки в текст
+        int score = 0;
+        switch (tempObject.gameObject.tag) {
+            case 0:
+                //TODO:
+                score = 5;
+                break;
+            case 1:
+                //TODO:
+                score = 7;
+                break;
+            case 2:
+                //TODO:
+                score = 8;
+                break;
+            case 3:
+                //TODO:
+                score = 10;
+                break;
+            case 4:
+                //TODO:
+                score = 12;
+                break;
+                
+            default:
+                break;
+        }
+        
         tempObject = nil;
         
         EnemyClass *newObject = [[EnemyClass alloc] init];
         
         UIButton *_button = [UIButton buttonWithType:UIButtonTypeCustom];
         
-        _button.frame = CGRectMake(tempX, tempY, sizeAndStep, sizeAndStep);
+        CGRect rect = CGRectMake(tempX, tempY, sizeAndStep, sizeAndStep);
+        
+        _button.frame = rect;
         
         _button.alpha = 1;
         
@@ -1111,6 +1137,17 @@
         newObject.gameObject.imageView.animationRepeatCount = 1;
         [newObject.gameObject.imageView startAnimating];
         
+        //Score Label
+        
+        UILabel *_scoreLabel = [[UILabel alloc] initWithFrame:rect];
+        _scoreLabel.backgroundColor = [UIColor clearColor];
+        _scoreLabel.font = [UIFont fontWithName:@"DBLCDTempBlack" size: 32.0];
+        _scoreLabel.textColor = [UIColor whiteColor];
+        _scoreLabel.text = [NSString stringWithFormat:@"%d", score];
+        _scoreLabel.textAlignment = UITextAlignmentCenter;
+        
+        [self.view addSubview:_scoreLabel];
+        
         
         [UIView animateWithDuration:0.1
                               delay:0.2
@@ -1120,7 +1157,19 @@
                          }
                          completion:^(BOOL finished){
                              [newObject.gameObject removeFromSuperview];
-                         }];        
+                         }];  
+        
+        [UIView animateWithDuration:animateDelayIn
+                              delay:0.2
+                            options:UIViewAnimationTransitionNone
+                         animations:^{
+                             _scoreLabel.frame = CGRectMake(91, 24, sizeAndStep, sizeAndStep);
+                             _scoreLabel.alpha = 0.0;
+                         }
+                         completion:^(BOOL finished){
+                             [_scoreLabel removeFromSuperview];
+                         }];   
+        
     }
     
 }
