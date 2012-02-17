@@ -165,8 +165,8 @@
         else
         {
             
-            [self setDefaultPicture: activeOne];
-            [self setDefaultPicture: activeTwo];
+            [activeOne setDefaultPicture];
+            [activeTwo setDefaultPicture];
             
             activeOne = nil;
             activeTwo = nil;
@@ -243,8 +243,8 @@
             if ([activeOne.gameObject.imageView isAnimating]) [activeOne.gameObject.imageView stopAnimating];
             if ([activeTwo.gameObject.imageView isAnimating]) [activeTwo.gameObject.imageView stopAnimating];
             
-            [self setDefaultPicture: activeOne];
-            [self setDefaultPicture: activeTwo];
+            [activeOne setDefaultPicture];
+            [activeTwo setDefaultPicture];
             
             activeOne = nil;
             activeTwo = nil;
@@ -282,8 +282,8 @@
     if ([activeOne.gameObject.imageView isAnimating]) [activeOne.gameObject.imageView stopAnimating];
     if ([activeTwo.gameObject.imageView isAnimating]) [activeTwo.gameObject.imageView stopAnimating];
     
-    [self setDefaultPicture: activeOne];
-    [self setDefaultPicture: activeTwo];
+    [activeOne setDefaultPicture];
+    [activeTwo setDefaultPicture];
     
     activeOne = activeTwo = nil;
     return NO;
@@ -304,8 +304,8 @@
     //[activeOne.gameObject setSelected:NO];
     //[activeTwo.gameObject setSelected:NO];
     
-    [self setDefaultPicture: activeOne];
-    [self setDefaultPicture: activeTwo];
+    [activeOne setDefaultPicture];
+    [activeTwo setDefaultPicture];
     
     //Получили индексы элементов
     NSUInteger elemIndexOne = [enemyArray indexOfObject:activeOne];
@@ -363,36 +363,6 @@
     
 }
 
--(void)setDefaultPicture:(EnemyClass *) index{
-    
-    
-    int tag = index.gameObject.tag;
-    
-    switch (tag) {
-        case 0:
-            [index.gameObject setImage:[UIImage imageNamed:@"Flu_Movement_1.png"] forState:UIControlStateNormal];
-            break;
-        case 1:
-            [index.gameObject setImage:[UIImage imageNamed:@"cold_movement_1.png"] forState:UIControlStateNormal];
-            break;
-        case 2:
-            [index.gameObject setImage:[UIImage imageNamed:@"dustMite_Move_1.png"] forState:UIControlStateNormal];
-            break;
-        case 3:
-            [index.gameObject setImage:[UIImage imageNamed:@"pollen_movement_1.png"] forState:UIControlStateNormal];
-            break;
-        case 4:
-            [index.gameObject setImage:[UIImage imageNamed:@"sailor_movement_1.png"] forState:UIControlStateNormal];
-            break;
-            
-        default:
-            break;
-    }
-    
-    index.gameObject.alpha = 1;
-    [index.gameObject setEnabled:YES];
-    
-}
 
 -(BOOL) verifyThreeInLine:(int) sender{
     
@@ -728,7 +698,7 @@
                                     options:UIViewAnimationTransitionNone
                                  animations:^{
                                      
-                                     [self changePicture:element];
+                                     [element changePicture];
                                      element.gameObject.alpha = 1;
                                      
                                  }
@@ -796,7 +766,7 @@
                                      
                                  }
                                  completion:^(BOOL finished){
-                                     [self changePicture:element];
+                                     [element changePicture];
                                      element.gameObject.alpha = 1;
                                      
                                  }];
@@ -847,7 +817,7 @@
                                      
                                  }
                                  completion:^(BOOL finished){
-                                     [self changePicture:element];
+                                     [element changePicture];
                                      element.gameObject.alpha = 1;
                                  }];
                 [enemyArray exchangeObjectAtIndex:index withObjectAtIndex:i * 5 + (index % 5)];
@@ -882,7 +852,7 @@
                                      
                                  }
                                  completion:^(BOOL finished){
-                                     [self changePicture:element];
+                                     [element changePicture];
                                      element.gameObject.alpha = 1;
                                  }];
                 [enemyArray exchangeObjectAtIndex:index withObjectAtIndex:i * 5 + (index % 5)];
@@ -914,7 +884,7 @@
                                  }
                                  completion:^(BOOL finished){
                                      
-                                     [self changePicture:element];
+                                     [element changePicture];
                                      element.gameObject.alpha = 1;
                                      
                                  }];
@@ -1023,7 +993,7 @@
     
     EnemyClass *enemyTwo = [enemyArray objectAtIndex: index];
     
-    [self changePicture:enemyTwo];
+    [enemyTwo changePicture];
     
     [UIView animateWithDuration:animateDuration
                           delay:animateDelayIn
@@ -1034,37 +1004,6 @@
                      completion:^(BOOL finished){
                          
                      }];
-    
-}
-
--(void) changePicture:(EnemyClass *) activeObject{
-    
-    
-    int rNumber = rand()%5;
-    
-    switch (rNumber) {
-        case 0:
-            [activeObject.gameObject setImage:[UIImage imageNamed:@"Flu_Movement_1.png"] forState:UIControlStateNormal];
-            break;
-        case 1:
-            [activeObject.gameObject setImage:[UIImage imageNamed:@"cold_movement_1.png"] forState:UIControlStateNormal];
-            break;
-        case 2:
-            [activeObject.gameObject setImage:[UIImage imageNamed:@"dustMite_Move_1.png"] forState:UIControlStateNormal];
-            break;
-        case 3:
-            [activeObject.gameObject setImage:[UIImage imageNamed:@"pollen_movement_1.png"] forState:UIControlStateNormal];
-            break;
-        case 4:
-            [activeObject.gameObject setImage:[UIImage imageNamed:@"sailor_movement_1.png"] forState:UIControlStateNormal];
-            break;
-            
-        default:
-            break;
-    }
-    
-    [activeObject.gameObject setTag:rNumber];
-    
     
 }
 
@@ -1120,7 +1059,7 @@
         
         _button.alpha = 1;
         
-        [_button setImage:[UIImage imageNamed:@"bomb_burst_1.png"] forState:UIControlStateNormal];
+        [_button setImage:[UIImage imageNamed:@"pop_1.png"] forState:UIControlStateNormal];
         
         newObject.gameObject = _button;
         
@@ -1128,10 +1067,10 @@
         
         
         newObject.gameObject.imageView.animationImages = [NSArray arrayWithObjects:
-                                                          [UIImage imageNamed:@"bomb_burst_1.png"],
-                                                          [UIImage imageNamed:@"bomb_burst_2.png"],
-                                                          [UIImage imageNamed:@"bomb_burst_3.png"],
-                                                          [UIImage imageNamed:@"bomb_burst_4.png"],
+                                                          [UIImage imageNamed:@"pop_1.png"],
+                                                          [UIImage imageNamed:@"pop_2.png"],
+                                                          [UIImage imageNamed:@"pop_3.png"],
+                                                          [UIImage imageNamed:@"pop_4.png"],
                                                           nil];
         newObject.gameObject.imageView.animationDuration = .3;
         newObject.gameObject.imageView.animationRepeatCount = 1;
@@ -1141,7 +1080,7 @@
         
         UILabel *_scoreLabel = [[UILabel alloc] initWithFrame:rect];
         _scoreLabel.backgroundColor = [UIColor clearColor];
-        _scoreLabel.font = [UIFont fontWithName:@"DBLCDTempBlack" size: 32.0];
+        _scoreLabel.font = [UIFont fontWithName:@"DBLCDTempBlack" size: 20.0];
         _scoreLabel.textColor = [UIColor whiteColor];
         _scoreLabel.text = [NSString stringWithFormat:@"%d", score];
         _scoreLabel.textAlignment = UITextAlignmentCenter;
@@ -1243,7 +1182,7 @@
     for (int i = 0; i < [enemyArray count]; i++) {
         EnemyClass *tempEnemy = [enemyArray objectAtIndex:i];
         
-        [self changePicture:tempEnemy];
+        [tempEnemy changePicture];
         
         tempEnemy = nil;
     }

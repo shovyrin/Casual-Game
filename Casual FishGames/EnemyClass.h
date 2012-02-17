@@ -14,4 +14,9 @@
 @property (nonatomic) int objectX;
 @property (nonatomic) int objectY;
 
+//меняем картинку и элемент
+-(void)changePicture;
+//установка картинки
+-(void)setDefaultPicture;
+
 @end

@@ -10,7 +10,7 @@
 
 #define animateDuration 0.3
 #define animateDelay 0.3
-#define animateDelayIn 0.5
+#define animateDelayIn 1.1
 #define animateSecondVerify 1.0
 #define sizeAndStep 53
 
@@ -47,10 +47,6 @@
 -(void) elementDownLoop:(int) index;
 //Ставим элемент в начало строки
 -(void) elementGoUP:(int) index;
-//меняем картинку и элемент
--(void)changePicture:(EnemyClass *) activeObject;
-//установка картинки
--(void)setDefaultPicture:(EnemyClass *) activeObject;
 //Рисуем очки
 -(void)addScores:(int) tagIndex andCount:(int)Count;
 //Анимационное добавление очков
