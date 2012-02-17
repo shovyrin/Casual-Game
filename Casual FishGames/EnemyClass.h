@@ -18,5 +18,7 @@
 -(void)changePicture;
 //установка картинки
 -(void)setDefaultPicture;
+//Animate Images
+-(void) imageAnimation;
 
 @end

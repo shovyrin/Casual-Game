@@ -107,9 +107,7 @@
 -(IBAction)tap1:(id)sender{
     
     UIButton *btn = (UIButton *) sender;
-    
-    [self imageAnimation:btn];
-    
+
     for (int i = 0; i < [enemyArray count]; i++)
     {
         EnemyClass *enemy;
@@ -119,6 +117,7 @@
             if (activeOne == nil)
             {
                 activeOne = enemy;
+                [activeOne imageAnimation];
                 
                 /*
                  //Работа с статусной строкой
@@ -130,6 +129,7 @@
             else
             {
                 activeTwo = enemy;
+                [activeTwo imageAnimation];
                 /*
                  //Работа с статусной строкой
                  int index = [enemyArray indexOfObject:enemy];
@@ -176,64 +176,7 @@
     
 }
 
--(void) imageAnimation:(UIButton *)btn{
-    
-    NSInteger num = btn.tag;
-    
-    
-    switch (num) {
-        case 0:
-            btn.imageView.animationImages = [NSArray arrayWithObjects:
-                                             [UIImage imageNamed:@"Flu_Movement_1.png"],
-                                             [UIImage imageNamed:@"Flu_Movement_2.png"],
-                                             [UIImage imageNamed:@"Flu_Movement_3.png"],
-                                             [UIImage imageNamed:@"Flu_Movement_4.png"],
-                                             nil];
-            break;
-        case 1:
-            btn.imageView.animationImages = [NSArray arrayWithObjects:
-                                             [UIImage imageNamed:@"cold_movement_1.png"],
-                                             [UIImage imageNamed:@"cold_movement_2.png"],
-                                             [UIImage imageNamed:@"cold_movement_3.png"],
-                                             [UIImage imageNamed:@"cold_movement_4.png"],
-                                             nil];
-            break;
-        case 2:
-            btn.imageView.animationImages = [NSArray arrayWithObjects:
-                                             [UIImage imageNamed:@"dustMite_Move_1.png"],
-                                             [UIImage imageNamed:@"dustMite_Move_2.png"],
-                                             [UIImage imageNamed:@"dustMite_Move_3.png"],
-                                             [UIImage imageNamed:@"dustMite_Move_4.png"],
-                                             nil];
-            break;
-        case 3:
-            btn.imageView.animationImages = [NSArray arrayWithObjects:
-                                             [UIImage imageNamed:@"pollen_movement_1.png"],
-                                             [UIImage imageNamed:@"pollen_movement_2.png"],
-                                             [UIImage imageNamed:@"pollen_movement_3.png"],
-                                             [UIImage imageNamed:@"pollen_movement_4.png"],
-                                             nil];
-            break;
-        case 4:
-            btn.imageView.animationImages = [NSArray arrayWithObjects:
-                                             [UIImage imageNamed:@"sailor_movement_1.png"],
-                                             [UIImage imageNamed:@"sailor_movement_2.png"],
-                                             [UIImage imageNamed:@"sailor_movement_3.png"],
-                                             [UIImage imageNamed:@"sailor_movement_4.png"],
-                                             nil];
-            break;
-            
-        default:
-            break;
-    }
-    
-    btn.imageView.animationDuration = .6;
-    //btn.imageView.animationRepeatCount = 50;
-    [btn.imageView startAnimating];
-    
-    
-    
-}
+
 
 -(BOOL) isTwoSelected{
     

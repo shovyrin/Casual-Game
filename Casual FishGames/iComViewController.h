@@ -27,6 +27,7 @@
 - (IBAction)resetButton:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UILabel *StatusLabel;
+
 //Создание объектов
 -(void) createElement:(int) X andY:(int) Y;
 //Проверка два элемента выделены
@@ -37,8 +38,6 @@
 -(void) changeActiveElements;
 //проверка на линии в ряд
 -(BOOL) verifyThreeInLine:(int) sender;
-//Animate Images
--(void) imageAnimation:(UIButton *) btn;
 //Удаляем строку X
 -(void) deleteStringRow:(NSMutableArray *) mass;
 //Удаляем строку Y
