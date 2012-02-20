@@ -13,7 +13,8 @@
 @implementation iComViewController
 @synthesize StatusLabel;
 
-@synthesize enemyArray, activeOne, activeTwo, Scores, indexMass;
+@synthesize enemyArray, activeOne, activeTwo, Scores, indexMass, gameState;
+@synthesize soundBulleObject, soundBulleURLRef, soundCoinObject, soundCoinURLRef;
 
 - (void)didReceiveMemoryWarning
 {
@@ -101,10 +102,44 @@
         posX = 30;
     }
     
+    //Установили режим игры
+    gameState = CanSelect; 
+    
+    //Загрузим музыку
+    NSURL *tapSoundBull   = [[NSBundle mainBundle] URLForResource: @"Bulle"
+                                                withExtension: @"wav"];
+    
+    // Store the URL as a CFURLRef instance
+    self.soundBulleURLRef = (__bridge CFURLRef) tapSoundBull;
+    
+    // Create a system sound object representing the sound file.
+    AudioServicesCreateSystemSoundID (
+                                      soundBulleURLRef,
+                                      &soundBulleObject
+                                      );
+    
+    NSURL *tapSoundCoin   = [[NSBundle mainBundle] URLForResource: @"coins_2"
+                                                withExtension: @"wav"];
+    
+    // Store the URL as a CFURLRef instance
+    self.soundCoinURLRef = (__bridge CFURLRef) tapSoundCoin;
+    
+    // Create a system sound object representing the sound file.
+    AudioServicesCreateSystemSoundID (
+                                      soundCoinURLRef,
+                                      &soundCoinObject
+                                      );
     
 }
 
 -(IBAction)tap1:(id)sender{
+    
+    //Проверка не идет ли анимация
+    if (gameState == GameBusy) {
+        
+        return;
+        
+    }
     
     UIButton *btn = (UIButton *) sender;
 
@@ -114,10 +149,12 @@
         enemy = [enemyArray objectAtIndex:i];
         if (btn == enemy.gameObject)
         {
-            if (activeOne == nil)
+            if (gameState == CanSelect && gameState != OneSelected)
             {
                 activeOne = enemy;
                 [activeOne imageAnimation];
+                
+                gameState = OneSelected;
                 
                 /*
                  //Работа с статусной строкой
@@ -130,6 +167,9 @@
             {
                 activeTwo = enemy;
                 [activeTwo imageAnimation];
+                
+                gameState = TwoSelected;
+                
                 /*
                  //Работа с статусной строкой
                  int index = [enemyArray indexOfObject:enemy];
@@ -180,7 +220,7 @@
 
 -(BOOL) isTwoSelected{
     
-    if (activeOne != nil && activeTwo !=nil) {
+    if (gameState == TwoSelected) {
         //проверка не равны ли элементы
         if (activeOne == activeTwo) {
             if ([activeOne.gameObject.imageView isAnimating]) [activeOne.gameObject.imageView stopAnimating];
@@ -191,10 +231,15 @@
             
             activeOne = nil;
             activeTwo = nil;
+            
+            gameState = CanSelect;
+            
             return NO;
         }
-        else
+        else{
+            gameState = GameBusy;
             return YES;
+        }
     }
     
     return NO;
@@ -229,11 +274,16 @@
     [activeTwo setDefaultPicture];
     
     activeOne = activeTwo = nil;
+    
+    gameState = CanSelect;
+    
     return NO;
 }
 
 -(void)changeActiveElements
 {
+    //Ставим статус действие выполняется
+    gameState = GameBusy;
     
     int tempOneX = activeOne.gameObject.center.x;
     int tempOneY = activeOne.gameObject.center.y;
@@ -278,8 +328,12 @@
                          if([self verifyThreeInLine: elemIndexTwo] == YES) deleteHelper++;
                          
                          ////////////////////////
-                         //ПРОВЕРКА НА СОВПАДЕНИЕ 3 В РЯД
+                         //ПРОВЕРКА НЕ ЛОЖНЫЙ ЛИ ОБМЕН
+                         
                          if (deleteHelper == 0){
+                             
+                             //Ставим статус действие выполняется
+                             gameState = GameBusy;
                              
                              [UIView animateWithDuration:0.4
                                                    delay:0.2
@@ -300,6 +354,8 @@
                          
                          activeOne = nil;
                          activeTwo = nil;
+                         
+                         gameState = CanSelect;
                      }
      ];
     
@@ -526,6 +582,8 @@
     
     
     //Кидаем взрыв
+    
+    AudioServicesPlaySystemSound (soundBulleObject);
     [self addBoomEffect:mass];
     
     for (int i = 0; i < [mass count]; i++) {
@@ -578,6 +636,7 @@
         
         NSString * str = @"Del. index: ";
         
+        //Ставим альфу в 0
         for (int i = 0; i < [mass count]; i++) {
             int index = [[mass objectAtIndex:i] intValue];
             
@@ -591,17 +650,21 @@
             
         }
         
-        //Кидаем взрыв
+        //Кидаем взрыв и звук
+        AudioServicesPlaySystemSound (soundBulleObject);
         [self addBoomEffect:mass];
         
+        //находим минимальный элемент
         int minIndex = [[mass objectAtIndex:0] intValue];
         
+        //получаем очки
         EnemyClass *scoreElem = [enemyArray objectAtIndex:minIndex];
         
         [self addScores:scoreElem.gameObject.tag andCount:[mass count]];
         
         scoreElem = nil;
         
+        //сдвигаем оставшиеся сверху шарики вниз
         while ( minIndex > 4){
             
             minIndex -= 5;
@@ -621,6 +684,7 @@
                              }];
         }
         
+        //Временная переменная для хранения минимального индекса
         int min = [[mass objectAtIndex:0] intValue];
         
         NSLog(@"Min index: %d", min);
@@ -636,24 +700,17 @@
                 
                 EnemyClass *element = [enemyArray objectAtIndex:index];
                 
+                [element changePicture];
                 [UIView animateWithDuration:animateDuration
-                                      delay:animateDelay
+                                      delay:animateDelayIn
                                     options:UIViewAnimationTransitionNone
                                  animations:^{
-                                     
-                                     [element changePicture];
-                                     element.gameObject.alpha = 1;
-                                     
+                                      element.gameObject.alpha = 1;
                                  }
                                  completion:^(BOOL finished){
-                                     
-                                     
+                                   
                                      
                                  }];
-                
-                //[enemyArray exchangeObjectAtIndex:minIndex withObjectAtIndex:minIndex + 5 * [mass count]];
-                
-                //minIndex += 5;
                 
             }
             
@@ -697,9 +754,10 @@
                 int index = [[mass objectAtIndex:i] intValue];
                 
                 EnemyClass *element = [enemyArray objectAtIndex:index];
+                [element changePicture];
                 
                 [UIView animateWithDuration:animateDuration
-                                      delay:animateDelay
+                                      delay:animateDelayIn
                                     options:UIViewAnimationTransitionNone
                                  animations:^{
                                      
@@ -709,8 +767,17 @@
                                      
                                  }
                                  completion:^(BOOL finished){
-                                     [element changePicture];
-                                     element.gameObject.alpha = 1;
+                                     [UIView animateWithDuration:animateDuration
+                                                           delay:0.0
+                                                         options:UIViewAnimationTransitionNone
+                                                      animations:^{
+                                                          
+                                                          element.gameObject.alpha = 1;
+                                                          
+                                                      }
+                                                      completion:^(BOOL finished){
+                                                          
+                                                      }];
                                      
                                  }];
                 
@@ -720,7 +787,7 @@
             for (int i = 0; i < [mass count] - 1; i++) {
                 int indexOne = [[mass objectAtIndex:i] intValue];
                 int indexTwo = [[mass objectAtIndex:i + 1] intValue];
-                //[mass exchangeObjectAtIn;ex:i withObjectAtIndex:i + 1];
+                //[mass exchangeObjectAtIndex:i withObjectAtIndex:i + 1];
                 [enemyArray exchangeObjectAtIndex:indexOne withObjectAtIndex:indexTwo];
             }
             
@@ -748,9 +815,10 @@
                 index = [[mass objectAtIndex:i] intValue];
                 
                 EnemyClass *element = [enemyArray objectAtIndex:index];
+                [element changePicture];
                 
                 [UIView animateWithDuration:animateDuration
-                                      delay:animateDelay
+                                      delay:animateDelayIn
                                     options:UIViewAnimationTransitionNone
                                  animations:^{
                                      
@@ -760,8 +828,17 @@
                                      
                                  }
                                  completion:^(BOOL finished){
-                                     [element changePicture];
-                                     element.gameObject.alpha = 1;
+                                     [UIView animateWithDuration:animateDuration
+                                                           delay:0.0
+                                                         options:UIViewAnimationTransitionNone
+                                                      animations:^{
+                                                          
+                                                          element.gameObject.alpha = 1;
+                                                          
+                                                      }
+                                                      completion:^(BOOL finished){
+                                                          
+                                                      }];
                                  }];
                 [enemyArray exchangeObjectAtIndex:index withObjectAtIndex:i * 5 + (index % 5)];
                 
@@ -783,9 +860,10 @@
                 index = [[mass objectAtIndex:i] intValue];
                 
                 EnemyClass *element = [enemyArray objectAtIndex:index];
+                [element changePicture];
                 
                 [UIView animateWithDuration:animateDuration
-                                      delay:animateDelay
+                                      delay:animateDelayIn
                                     options:UIViewAnimationTransitionNone
                                  animations:^{
                                      
@@ -795,8 +873,17 @@
                                      
                                  }
                                  completion:^(BOOL finished){
-                                     [element changePicture];
-                                     element.gameObject.alpha = 1;
+                                     [UIView animateWithDuration:animateDuration
+                                                           delay:0.0
+                                                         options:UIViewAnimationTransitionNone
+                                                      animations:^{
+                                                          
+                                                          element.gameObject.alpha = 1;
+                                                          
+                                                      }
+                                                      completion:^(BOOL finished){
+                                                          
+                                                      }];
                                  }];
                 [enemyArray exchangeObjectAtIndex:index withObjectAtIndex:i * 5 + (index % 5)];
                 
@@ -814,9 +901,10 @@
             while (minIndex < min) {
                 
                 EnemyClass *element = [enemyArray objectAtIndex:minIndex + 5 * [mass count]];
+                [element changePicture];
                 
                 [UIView animateWithDuration:animateDuration
-                                      delay:animateDelay
+                                      delay:animateDelayIn
                                     options:UIViewAnimationTransitionNone
                                  animations:^{
                                      
@@ -826,9 +914,18 @@
                                      
                                  }
                                  completion:^(BOOL finished){
+                                     [UIView animateWithDuration:animateDuration
+                                                           delay:0.0
+                                                         options:UIViewAnimationTransitionNone
+                                                      animations:^{
+                                                          
+                                                          element.gameObject.alpha = 1;
+                                                          
+                                                      }
+                                                      completion:^(BOOL finished){
+                                                          
+                                                      }];
                                      
-                                     [element changePicture];
-                                     element.gameObject.alpha = 1;
                                      
                                  }];
                 
@@ -849,12 +946,20 @@
             
             element.gameObject.alpha = 0;
             
-            // NSLog(@"Del_index: %d", index);
+            [UIView animateWithDuration:animateDuration
+                                  delay:animateDelayIn
+                                options:UIViewAnimationTransitionNone
+                             animations:^{
+                                 [element changePicture];
+                                 element.gameObject.alpha = 1;
+                             }
+                             completion:^(BOOL finished){
+                             }];
             
         }
     }
     
-    
+    //Получаем индексы для повторной проверки
     indexMass = [[NSMutableArray alloc]initWithArray:mass];
     
     [NSTimer scheduledTimerWithTimeInterval:animateSecondVerify target:self selector:@selector(secondVerifyLine)  userInfo:nil repeats:NO];
@@ -871,7 +976,7 @@
         while (index > 4){
             
             while([self verifyThreeInLine:index] == YES){
-                [NSTimer scheduledTimerWithTimeInterval:animateSecondVerify target:self selector:@selector(secondVerifyLine)  userInfo:nil repeats:NO];
+                [NSTimer scheduledTimerWithTimeInterval:animateSecondVerify target:self selector:@selector(secondVerifyLine) userInfo:nil repeats:NO];
             }
             
             index -= 5;
@@ -880,6 +985,22 @@
         
     }
     
+}
+
+-(void)secondVerifyLineVert{
+    
+    //Проверка случайных совпадений
+    int index = [[indexMass objectAtIndex:[indexMass count] - 1] intValue];
+    
+    while (index > 4){
+        
+        while([self verifyThreeInLine:index] == YES){
+            [NSTimer scheduledTimerWithTimeInterval:animateSecondVerify target:self selector:@selector(secondVerifyLine)  userInfo:nil repeats:NO];
+        }
+        
+        index -= 5;
+        
+    }
 }
 
 -(void) elementDownLoop:(int)index{
@@ -945,7 +1066,7 @@
                          enemyTwo.gameObject.alpha = 1;
                      }
                      completion:^(BOOL finished){
-                         
+                         [self verifyThreeInLine:index];
                      }];
     
 }
@@ -1046,7 +1167,7 @@
                             options:UIViewAnimationTransitionNone
                          animations:^{
                              _scoreLabel.frame = CGRectMake(91, 24, sizeAndStep, sizeAndStep);
-                             _scoreLabel.alpha = 0.0;
+                             _scoreLabel.alpha = 0.3;
                          }
                          completion:^(BOOL finished){
                              [_scoreLabel removeFromSuperview];
@@ -1093,6 +1214,8 @@
     score += parseScore;
     
     Scores = score;
+    
+    AudioServicesPlaySystemSound (soundCoinObject);
     
     [NSTimer scheduledTimerWithTimeInterval:0.06 target:self selector:@selector(animateScore)  userInfo:nil repeats:YES];
 }

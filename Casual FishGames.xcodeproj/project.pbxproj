@@ -20,6 +20,9 @@
 		45838C6B14E2D2D70026FECE /* NarrativeComicCompletedBig.png in Resources */ = {isa = PBXBuildFile; fileRef = 45838C6914E2D2D70026FECE /* NarrativeComicCompletedBig.png */; };
 		45838C6C14E2D2F90026FECE /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 458315D214D292850038B0FF /* Default.png */; };
 		45838C6D14E2D2FE0026FECE /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 458315D414D2929F0038B0FF /* Default@2x.png */; };
+		458493DB14F246A0005D3839 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 458493DA14F246A0005D3839 /* AudioToolbox.framework */; };
+		458493E314F25363005D3839 /* Bulle.wav in Resources */ = {isa = PBXBuildFile; fileRef = 458493E214F25363005D3839 /* Bulle.wav */; };
+		458493E914F27938005D3839 /* coins_2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 458493E814F27938005D3839 /* coins_2.wav */; };
 		4584C49E14D0394D003656FB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4584C49D14D0394D003656FB /* UIKit.framework */; };
 		4584C4A014D0394D003656FB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4584C49F14D0394D003656FB /* Foundation.framework */; };
 		4584C4A214D0394D003656FB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4584C4A114D0394D003656FB /* CoreGraphics.framework */; };
@@ -84,6 +87,9 @@
 		45838C6414E2D1140026FECE /* titleGraphiBig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = titleGraphiBig.png; sourceTree = "<group>"; };
 		45838C6814E2D2D70026FECE /* NarrativeComicCompleted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NarrativeComicCompleted.png; sourceTree = "<group>"; };
 		45838C6914E2D2D70026FECE /* NarrativeComicCompletedBig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NarrativeComicCompletedBig.png; sourceTree = "<group>"; };
+		458493DA14F246A0005D3839 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		458493E214F25363005D3839 /* Bulle.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Bulle.wav; sourceTree = "<group>"; };
+		458493E814F27938005D3839 /* coins_2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = coins_2.wav; sourceTree = "<group>"; };
 		4584C49914D0394D003656FB /* Casual FishGames.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Casual FishGames.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4584C49D14D0394D003656FB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4584C49F14D0394D003656FB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -145,6 +151,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				458493DB14F246A0005D3839 /* AudioToolbox.framework in Frameworks */,
 				4584C49E14D0394D003656FB /* UIKit.framework in Frameworks */,
 				4584C4A014D0394D003656FB /* Foundation.framework in Frameworks */,
 				4584C4A214D0394D003656FB /* CoreGraphics.framework in Frameworks */,
@@ -154,6 +161,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		458493E114F25329005D3839 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				458493E214F25363005D3839 /* Bulle.wav */,
+				458493E814F27938005D3839 /* coins_2.wav */,
+			);
+			name = Audio;
+			sourceTree = "<group>";
+		};
 		4584C48E14D0394D003656FB = {
 			isa = PBXGroup;
 			children = (
@@ -175,6 +191,7 @@
 		4584C49C14D0394D003656FB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				458493DA14F246A0005D3839 /* AudioToolbox.framework */,
 				4584C49D14D0394D003656FB /* UIKit.framework */,
 				4584C49F14D0394D003656FB /* Foundation.framework */,
 				4584C4A114D0394D003656FB /* CoreGraphics.framework */,
@@ -185,6 +202,7 @@
 		4584C4A314D0394D003656FB /* Casual FishGames */ = {
 			isa = PBXGroup;
 			children = (
+				458493E114F25329005D3839 /* Audio */,
 				4585566214D1ADE00093EEC7 /* Images */,
 				4584C4BA14D03CCC003656FB /* Classes */,
 				4584C4AC14D0394D003656FB /* iComAppDelegate.h */,
@@ -379,6 +397,8 @@
 				45DE7A5614EE48C80095B0D0 /* pop_2.png in Resources */,
 				45DE7A5714EE48C80095B0D0 /* pop_3.png in Resources */,
 				45DE7A5814EE48C80095B0D0 /* pop_4.png in Resources */,
+				458493E314F25363005D3839 /* Bulle.wav in Resources */,
+				458493E914F27938005D3839 /* coins_2.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

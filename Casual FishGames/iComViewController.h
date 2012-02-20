@@ -7,12 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#include <AudioToolbox/AudioToolbox.h>
 
-#define animateDuration 0.3
-#define animateDelay 0.3
-#define animateDelayIn 1.1
-#define animateSecondVerify 1.0
+#define animateDuration 0.3 + 0
+#define animateDelay 0.3 + 0
+#define animateDelayIn 1.3 + 0
+#define animateSecondVerify 2.1 + 0
 #define sizeAndStep 53
+
+typedef enum{
+    CanSelect,
+    OneSelected,
+    TwoSelected,
+    GameBusy
+    
+} GameState;
 
 @class EnemyClass;
 
@@ -23,6 +32,12 @@
 @property (nonatomic, strong) EnemyClass *activeTwo;
 @property (nonatomic) NSInteger Scores;
 @property (nonatomic, retain) NSMutableArray *indexMass;
+@property (nonatomic) GameState gameState;
+//Audio
+@property (readwrite) CFURLRef		soundBulleURLRef;
+@property (readonly) SystemSoundID	soundBulleObject;
+@property (readwrite) CFURLRef		soundCoinURLRef;
+@property (readonly) SystemSoundID	soundCoinObject;
 
 - (IBAction)resetButton:(id)sender;
 
@@ -54,5 +69,7 @@
 -(void)addBoomEffect:(NSMutableArray *) mass;
 //Повторный пробег по строкам
 -(void)secondVerifyLine;
+//Повторный пробег по строкам
+-(void)secondVerifyLineVert;
 
 @end
