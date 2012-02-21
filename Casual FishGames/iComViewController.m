@@ -14,7 +14,8 @@
 @synthesize StatusLabel;
 
 @synthesize enemyArray, activeOne, activeTwo, Scores, indexMass, gameState;
-@synthesize soundBulleObject, soundBulleURLRef, soundCoinObject, soundCoinURLRef;
+@synthesize soundBulleObject, soundBulleURLRef, soundCoinObject, soundCoinURLRef,
+            soundErrorMoveObject, soundErrorMoveURLRef, soundSelectObject, soundSelectURLRef;
 
 - (void)didReceiveMemoryWarning
 {
@@ -130,6 +131,30 @@
                                       &soundCoinObject
                                       );
     
+    NSURL *tapSoundSelect   = [[NSBundle mainBundle] URLForResource: @"select"
+                                                    withExtension: @"wav"];
+    
+    // Store the URL as a CFURLRef instance
+    self.soundSelectURLRef = (__bridge CFURLRef) tapSoundSelect;
+    
+    // Create a system sound object representing the sound file.
+    AudioServicesCreateSystemSoundID (
+                                      soundSelectURLRef,
+                                      &soundSelectObject
+                                      );
+    
+    NSURL *tapSoundError   = [[NSBundle mainBundle] URLForResource: @"error_move"
+                                                      withExtension: @"wav"];
+    
+    // Store the URL as a CFURLRef instance
+    self.soundErrorMoveURLRef = (__bridge CFURLRef) tapSoundError;
+    
+    // Create a system sound object representing the sound file.
+    AudioServicesCreateSystemSoundID (
+                                      soundErrorMoveURLRef,
+                                      &soundErrorMoveObject
+                                      );
+    
 }
 
 -(IBAction)tap1:(id)sender{
@@ -142,6 +167,8 @@
     }
     
     UIButton *btn = (UIButton *) sender;
+    
+    AudioServicesPlaySystemSound(soundSelectObject);
 
     for (int i = 0; i < [enemyArray count]; i++)
     {
@@ -335,7 +362,9 @@
                              //Ставим статус действие выполняется
                              gameState = GameBusy;
                              
-                             [UIView animateWithDuration:0.4
+                             AudioServicesPlaySystemSound(soundErrorMoveObject);
+                             
+                             [UIView animateWithDuration:0.2
                                                    delay:0.2
                                                  options:UIViewAnimationTransitionNone
                                               animations:^{

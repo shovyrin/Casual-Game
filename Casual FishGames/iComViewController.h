@@ -36,8 +36,15 @@ typedef enum{
 //Audio
 @property (readwrite) CFURLRef		soundBulleURLRef;
 @property (readonly) SystemSoundID	soundBulleObject;
+
 @property (readwrite) CFURLRef		soundCoinURLRef;
 @property (readonly) SystemSoundID	soundCoinObject;
+
+@property (readwrite) CFURLRef		soundErrorMoveURLRef;
+@property (readonly) SystemSoundID	soundErrorMoveObject;
+
+@property (readwrite) CFURLRef		soundSelectURLRef;
+@property (readonly) SystemSoundID	soundSelectObject;
 
 - (IBAction)resetButton:(id)sender;
 

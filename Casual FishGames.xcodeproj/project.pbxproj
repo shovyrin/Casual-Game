@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4512C1DC14F38A0800E085CA /* error_move.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4512C1DA14F38A0800E085CA /* error_move.wav */; };
+		4512C1DD14F38A0800E085CA /* select.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4512C1DB14F38A0800E085CA /* select.wav */; };
 		458315D014D2927F0038B0FF /* bg_320.png in Resources */ = {isa = PBXBuildFile; fileRef = 458315CF14D2927F0038B0FF /* bg_320.png */; };
 		458322A714E534D500A611EF /* bomb_burst_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 458322A114E534D500A611EF /* bomb_burst_1.png */; };
 		458322A814E534D500A611EF /* bomb_burst_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 458322A214E534D500A611EF /* bomb_burst_2.png */; };
@@ -74,6 +76,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4512C1DA14F38A0800E085CA /* error_move.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = error_move.wav; sourceTree = "<group>"; };
+		4512C1DB14F38A0800E085CA /* select.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = select.wav; sourceTree = "<group>"; };
 		458315CF14D2927F0038B0FF /* bg_320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_320.png; sourceTree = "<group>"; };
 		458315D214D292850038B0FF /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
 		458315D414D2929F0038B0FF /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
@@ -166,6 +170,8 @@
 			children = (
 				458493E214F25363005D3839 /* Bulle.wav */,
 				458493E814F27938005D3839 /* coins_2.wav */,
+				4512C1DA14F38A0800E085CA /* error_move.wav */,
+				4512C1DB14F38A0800E085CA /* select.wav */,
 			);
 			name = Audio;
 			sourceTree = "<group>";
@@ -399,6 +405,8 @@
 				45DE7A5814EE48C80095B0D0 /* pop_4.png in Resources */,
 				458493E314F25363005D3839 /* Bulle.wav in Resources */,
 				458493E914F27938005D3839 /* coins_2.wav in Resources */,
+				4512C1DC14F38A0800E085CA /* error_move.wav in Resources */,
+				4512C1DD14F38A0800E085CA /* select.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
